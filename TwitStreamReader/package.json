@@ -1,0 +1,15 @@
+{
+  "name": "twit-stream-reader",
+  "version": "0.0.0",
+  "description": "TwitStreamReader",
+  "main": "app.js",
+  "author": {
+    "name": "Rick",
+    "email": "rick@rivaro.be"
+  },
+  "dependencies": {
+    "azure-storage": "^0.10.0",
+    "nconf": "^0.8.4",
+    "node-tweet-stream": "^1.10.0"
+  }
+}
