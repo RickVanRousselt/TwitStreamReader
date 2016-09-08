@@ -11,7 +11,7 @@ var t = new Twitter({
     consumer_secret: 'DwqgPkj7a84jlPNd8F6Txdeb7eghRFoRWgkPzTdXMHyg9rBqNC',
     token: '348352862-wh76w5xkwUxBj0jLmwN6VwwGYIYOTtJDQBGUjpxv',
     token_secret: 'L1XZOqqzFktuumgK0OnSFCbC1cbq2njlBzfDSYfL2ELpy'
-})
+});
 
 
 queueSvc.createQueueIfNotExists("incomingstreamids", function (error, result, response) {
