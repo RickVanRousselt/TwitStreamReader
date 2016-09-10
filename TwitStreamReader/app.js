@@ -8,7 +8,7 @@ var tableSvc = azure.createTableService('twitstream', process.env.azure_key);
 
 var t = new Twitter({
 	consumer_key: process.env.consumer_key,
-	consumer_secret: process.env.consumer_secret,
+	consumer_secret: process.env.consumer_secret, 
 	token: process.env.token,
 	token_secret: process.env.token_secret
 });
