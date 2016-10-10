@@ -1,12 +1,12 @@
 ﻿
 var azure = require('azure-storage');
-var Twitter = require('node-tweet-stream')
+var Twitter = require('node-tweet-stream');
 
-var queueSvc = azure.createQueueService('twitstream', process.env.azure_key);
+var QueueSvc = azure.createQueueService(process.env.table_name, process.env.azure_key);
 
-var tableSvc = azure.createTableService('twitstream', process.env.azure_key);
+var TableSvc = azure.createTableService(process.env.table_name, process.env.azure_key);
 
-var t = new Twitter({
+var T = new Twitter({
 	consumer_key: process.env.consumer_key,
 	consumer_secret: process.env.consumer_secret, 
 	token: process.env.token,
@@ -14,14 +14,14 @@ var t = new Twitter({
 });
 
 
-queueSvc.createQueueIfNotExists("incomingstreamids", function (error, result, response) {
+QueueSvc.createQueueIfNotExists("incomingstreamids", function (error, result, response) {
     if (!error) {
         // Queue created or exists
         
-        tableSvc.createTableIfNotExists('incomingstreamcontents', function (error, result, response) {
+        TableSvc.createTableIfNotExists('incomingstreamcontents', function (error, result, response) {
             if (!error) {
                 // Table exists or created
-                t.on('tweet', function (tweet) {
+                T.on('tweet', function (tweet) {
                     var entGen = azure.TableUtilities.entityGenerator;
                     var task = {
                         PartitionKey: entGen.String(tweet.user.id_str),
@@ -29,13 +29,13 @@ queueSvc.createQueueIfNotExists("incomingstreamids", function (error, result, re
                         description: entGen.String(JSON.stringify(tweet))
                     };
                     
-                    tableSvc.insertEntity('incomingstreamcontents', task, function (error, result, response) {
+                    TableSvc.insertEntity('incomingstreamcontents', task, function (error, result, response) {
                         if (!error) {
     
                         }
                     });
-                    var queMessage = tweet.user.id_str + ';' + tweet.id_str
-                    queueSvc.createMessage('incomingstreamids', queMessage , function (error, result, response) {
+                    var queMessage = tweet.user.id_str + ';' + tweet.id_str;
+                    QueueSvc.createMessage('incomingstreamids', queMessage , function (error, result, response) {
                         if (!error) {
             
                         }
@@ -43,12 +43,12 @@ queueSvc.createQueueIfNotExists("incomingstreamids", function (error, result, re
                     console.log(tweet);
                 });
                 
-                t.on('error', function (err) {
+                T.on('error', function (err) {
    
                 });
 
 
-                t.track(process.env.subject);
+                T.track(process.env.subject);
 
             }
         });
