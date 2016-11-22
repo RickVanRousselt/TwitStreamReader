@@ -20,7 +20,7 @@ The following environment variables are required to have this run correctly.
     "subject": <The hashtag to follow>,
     "table_name": <The name of the table in the Azure Storage account>
 
-This repo is created to run inside a docker container. This docker container can then be deployed to the [Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/) to deploy the entire application.
+This repo is created to run inside a [docker container](https://hub.docker.com/r/rickvanrousselt/twitstreamreader/). This docker container can then be deployed to the [Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/) to deploy the entire application.
 
 To run this inside ACS the following JSON can be used inside Marathon to run the container.
 
